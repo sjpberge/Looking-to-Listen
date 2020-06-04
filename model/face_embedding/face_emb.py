@@ -51,7 +51,10 @@ if HDF5:
             I_np = I_np[np.newaxis, :, :, :]
             # print(I_np.shape)
             # print(avgPool_layer_model.predict(I_np).shape)
-            embtmp[i - 1, :] = avgPool_layer_model.predict(I_np)
+            if np.all(I_np == 0):
+                pass
+            else:
+                embtmp[i - 1, :] = avgPool_layer_model.predict(I_np)
 
         # print(embtmp.shape)
         people_index = int(line.strip().split('_')[1])

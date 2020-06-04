@@ -2,6 +2,7 @@ from mtcnn.mtcnn import MTCNN
 import cv2
 import pandas as pd
 import os
+import numpy as np
 
 
 def bounding_box_check(faces,x,y):
@@ -37,10 +38,14 @@ def face_detect(file,detector,frame_path,cat_train,output_dir):
     # check if detected faces
     if(len(faces)==0):
         print('no face detect: '+file)
+        blank_frame = np.zeros([160, 160 ,3], dtype=np.uint8)
+        cv2.imwrite('%s/frame_' % output_dir + name[0] + '_' + name[1] + '.jpg', blank_frame)
         return #no face
     bounding_box = bounding_box_check(faces,x,y)
     if(bounding_box == None):
         print('face is not related to given coord: '+file)
+        blank_frame = np.zeros([160, 160, 3], dtype=np.uint8)
+        cv2.imwrite('%s/frame_' % output_dir + name[0] + '_' + name[1] + '.jpg', blank_frame)
         return
     print(file," ",bounding_box)
     print(file," ",x, y)
